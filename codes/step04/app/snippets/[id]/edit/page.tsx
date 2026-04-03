@@ -5,7 +5,6 @@ import MonacoEditor from "@/components/CodeEditor";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Field, FieldLabel } from "@/components/ui/field";
-import { revalidatePath } from "next/cache";
 
 interface EditSnippetPageProps {
   params: Promise<{ id: string }>;
@@ -24,8 +23,7 @@ export default async function EditSnippetPage({ params }: EditSnippetPageProps) 
     const title = formData.get("title") as string;
     const code = formData.get("code") as string;
     const response = await updateSnippetById(Number(id), title, code);
-    revalidatePath("/");
-    redirect("/");
+    redirect(`/snippets/${id}`);
   }
 
   return (
